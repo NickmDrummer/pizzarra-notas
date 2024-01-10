@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
+
+.note {
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+.note-content {
+    font-family: 'Annie Use Your Telescope', cursive;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .note {
+        /* Write styles for .note class for screens smaller than 600px */
+    }
+
+    .note-content {
+        /* Write styles for .note-content class for screens smaller than 600px */
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .note {
+        /* Write styles for .note class for screens between 601px and 1024px */
+    }
+
+    .note-content {
+        /* Write styles for .note-content class for screens between 601px and 1024px */
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+    .note {
+        /* Write styles for .note class for screens larger than 1025px */
+    }
+
+    .note-content {
+        /* Write styles for .note-content class for screens larger than 1025px */
+    }
+}
