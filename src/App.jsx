@@ -1,7 +1,20 @@
+import { useState } from 'react';
 import './App.css';
 import Note from './components/Note/Note';
 
 function App() {
+  const [notes, setNotes] = useState([]);
+
+  function agregarNota() {
+    const titulo = document.getElementById('recipient-name').value;
+    const contenido = document.getElementById('message-text').value;
+    const nota = {
+      titulo: titulo,
+      contenido: contenido,
+    };
+    setNotes([...notes, nota]);
+  }
+
   return (
     <div className="App">
       <h1 className="text-white">Pizzarra Notas</h1>
@@ -22,21 +35,21 @@ function App() {
           aria-labelledby="nuevanotaLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog">
-            <div className="modal-content modalNota">
-              <div className="modal-header border-bottom-0 ">
-                <h1 className="modal-title fs-5" id="nuevanotaLabel">
-                  Nueva Nota
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <form>
+          <form>
+            <div className="modal-dialog">
+              <div className="modal-content modalNota">
+                <div className="modal-header border-bottom-0 ">
+                  <h1 className="modal-title fs-5" id="nuevanotaLabel">
+                    Nueva Nota
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
                   <div className="mb-3">
                     <label
                       htmlFor="recipient-name"
@@ -62,30 +75,39 @@ function App() {
                       id="message-text"
                     ></textarea>
                   </div>
-                </form>
-              </div>
-              <div className="modal-footer border-top-0 ">
-                <button
-                  type="button"
-                  className="btn btn-danger fs-5 "
-                  data-bs-dismiss="modal"
-                >
-                  Cerrar
-                </button>
-                <button type="button" className="btn btn-dark fs-5">
-                  Guardar Nota
-                </button>
+                </div>
+                <div className="modal-footer border-top-0 ">
+                  <button
+                    type="button"
+                    className="btn btn-danger fs-5 "
+                    data-bs-dismiss="modal"
+                  >
+                    Cerrar
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={e => {
+                      e.preventDefault();
+                      agregarNota();
+                    }}
+                    className="btn btn-dark fs-5"
+                  >
+                    Guardar Nota
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <div className="notasContainer">
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
+        {notes.map((nota, index) => (
+          <Note
+            key={index}
+            titulo={nota.titulo}
+            contenido={nota.contenido}
+          ></Note>
+        ))}
       </div>
     </div>
   );
