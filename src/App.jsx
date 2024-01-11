@@ -4,7 +4,21 @@ import Note from './components/Note/Note';
 function App() {
   return (
     <div className="App">
-      <Note />
+      <div className="notasContainer">
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+      </div>
     </div>
   );
 }
