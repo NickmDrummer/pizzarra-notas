@@ -7,6 +7,23 @@
 
 }
 
+.notaIconos {
+    position: absolute;
+    cursor: pointer;
+}
+
+#pen {
+    top: 60px;
+    right: 20px;
+    max-height: 25px;
+}
+
+#close {
+    top: 20px;
+    right: 20px;
+    max-height: 25px;
+}
+
 .note img {
     max-width: 100%;
     height: auto;
@@ -35,6 +52,18 @@
     .note {
         width: calc((100% - 10px) / 1);
 
+    }
+
+    #pen {
+        top: 60px;
+        right: 40px;
+        max-height: 30px;
+    }
+
+    #close {
+        top: 20px;
+        right: 40px;
+        max-height: 30px;
     }
 
     .note img {
