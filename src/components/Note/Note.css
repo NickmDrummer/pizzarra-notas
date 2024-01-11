@@ -3,9 +3,10 @@
 .note {
     text-align: center;
     position: relative;
+    margin: 5px;
     flex: none;
     width: calc((100% - 2%) / 6);
-    margin-bottom: 30px;
+
 }
 
 .note img {
@@ -38,8 +39,7 @@
     }
 
     .note-content {
-        font-size: medium;
-
+        font-size: 20px;
     }
 }
 
