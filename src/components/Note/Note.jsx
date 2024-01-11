@@ -4,7 +4,7 @@ function Note() {
 
   return (
     <div className="note">
-      <img src="./img/note/note.png" alt="" />
+      <img src="./img/note/note.png" style={{ width: '100%' }} alt="Note" />
 
       <div className="note-content">
         <h2>{titulo}</h2>

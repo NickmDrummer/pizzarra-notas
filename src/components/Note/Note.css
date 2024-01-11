@@ -8,22 +8,38 @@
     margin-bottom: 30px;
 }
 
-.note-content {
-    font-family: 'Annie Use Your Telescope', cursive;
-    font-size: 100%;
-    font-weight: 600;
-    position: absolute;
-    top: 0;
-    left: 10%;
-    width: 80%;
-    height: 100%;
-    overflow: auto;
+.note img {
+    max-width: 100%;
+    height: auto;
 }
 
+.note-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Annie Use Your Telescope', cursive;
+    font-weight: 600;
+    margin: auto;
+    width: 75%;
+    height: 90%;
+    overflow: auto;
+    scrollbar-width: none;
+
+}
+
+.note-content::-webkit-scrollbar {
+    display: none;
+}
 
 @media screen and (max-width: 600px) {
     .note {
         width: calc((100% - 2%) / 1);
+    }
+
+    .note-content {
+        font-size: medium;
+
     }
 }
 
