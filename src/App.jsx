@@ -88,7 +88,9 @@ function App() {
                     type="submit"
                     onClick={e => {
                       e.preventDefault();
-                      agregarNota();
+                      if (validarFormulario()) {
+                        agregarNota();
+                      }
                     }}
                     className="btn btn-dark fs-5"
                   >
@@ -114,3 +116,13 @@ function App() {
 }
 
 export default App;
+
+function validarFormulario() {
+  const titulo = document.getElementById('recipient-name').value;
+  const contenido = document.getElementById('message-text').value;
+  if (titulo === '' || contenido === '') {
+    alert('Por favor, rellene todos los campos');
+    return false;
+  }
+  return true;
+}
