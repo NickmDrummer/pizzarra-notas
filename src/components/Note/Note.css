@@ -1,7 +1,7 @@
 .note {
     text-align: center;
     position: relative;
-
+    margin-bottom: 20px;
     flex: none;
     width: calc((100% - 50px) / 6);
 

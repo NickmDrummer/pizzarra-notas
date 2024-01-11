@@ -8,6 +8,7 @@ function App() {
   function agregarNota() {
     const titulo = document.getElementById('recipient-name').value;
     const contenido = document.getElementById('message-text').value;
+
     const nota = {
       titulo: titulo,
       contenido: contenido,
@@ -23,19 +24,19 @@ function App() {
           type="button"
           className="btn btn-outline-light"
           data-bs-toggle="modal"
-          data-bs-target="#nuevanota"
+          data-bs-target="#nuevaNota"
         >
           Nueva Nota
         </button>
 
         <div
           className="modal fade"
-          id="nuevanota"
+          id="nuevaNota"
           tabIndex="-1"
           aria-labelledby="nuevanotaLabel"
           aria-hidden="true"
         >
-          <form>
+          <form id="Formulario">
             <div className="modal-dialog">
               <div className="modal-content modalNota">
                 <div className="modal-header border-bottom-0 ">
@@ -91,8 +92,11 @@ function App() {
                       if (validarFormulario()) {
                         agregarNota();
                       }
+
+                      document.getElementById('Formulario').reset();
                     }}
                     className="btn btn-dark fs-5"
+                    data-bs-dismiss="modal"
                   >
                     Guardar Nota
                   </button>
@@ -122,6 +126,7 @@ function validarFormulario() {
   const contenido = document.getElementById('message-text').value;
   if (titulo === '' || contenido === '') {
     alert('Por favor, rellene todos los campos');
+
     return false;
   }
   return true;
