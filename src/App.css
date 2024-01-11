@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
+
+
 html,
 body {
     margin: 0;
@@ -11,8 +14,46 @@ body {
 .App {
     background-size: cover;
     width: 100vw;
+    text-align: center;
+    margin-top: 30px;
 
 
+
+}
+
+.nuevaNotaContainer {
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.modalNota {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background: rgb(131, 100, 36);
+    background: linear-gradient(180deg, rgb(201, 149, 45) 0%, rgba(247, 199, 99, 1) 48%, rgba(251, 222, 142, 1) 100%);
+    font-family: 'Annie Use Your Telescope', cursive;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+
+#nuevanotaLabel {
+    font-size: 1.5rem !important;
+    font-weight: 600;
+}
+
+.form-control {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+}
+
+.form-control:focus {
+    background-color: transparent;
+    border-bottom: none;
+    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.575);
 }
 
 
