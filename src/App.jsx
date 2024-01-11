@@ -38,7 +38,10 @@ function App() {
               <div className="modal-body">
                 <form>
                   <div className="mb-3">
-                    <label htmlFor="recipient-name" className="col-form-label">
+                    <label
+                      htmlFor="recipient-name"
+                      className="col-form-label fs-3 fw-bold"
+                    >
                       Titulo:
                     </label>
                     <input
@@ -48,7 +51,10 @@ function App() {
                     ></input>
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="message-text" className="col-form-label">
+                    <label
+                      htmlFor="message-text"
+                      className="col-form-label fs-3 fw-bold"
+                    >
                       Mensaje:
                     </label>
                     <textarea
@@ -75,14 +81,6 @@ function App() {
         </div>
       </div>
       <div className="notasContainer">
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
-        <Note />
         <Note />
         <Note />
         <Note />
