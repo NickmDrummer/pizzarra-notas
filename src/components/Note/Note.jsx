@@ -1,5 +1,6 @@
-import close from './../../../public/img/close-circle-sharp.svg';
-import pen from './../../../public/img/pencil-sharp.svg';
+/* eslint-disable react/prop-types */
+import close from './../../img/close-circle-sharp.svg';
+import pen from './../../img/pencil-sharp.svg';
 
 import './Note.css';
 function Note({ titulo, contenido }) {
