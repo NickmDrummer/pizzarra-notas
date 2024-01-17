@@ -55,14 +55,14 @@
     }
 
     #pen {
-        top: 60px;
-        right: 40px;
+        top: 50px;
+        right: 30px;
         max-height: 30px;
     }
 
     #close {
-        top: 20px;
-        right: 40px;
+        top: 15px;
+        right: 30px;
         max-height: 30px;
     }
 
@@ -80,10 +80,20 @@
     .note {
         width: calc((100% - 40px) / 3);
     }
+
+    .note-content {
+        width: 70%;
+    }
+
+
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
     .note {
         width: calc((100% - 50px) / 4);
+    }
+
+    .note-content {
+        width: 70%;
     }
 }

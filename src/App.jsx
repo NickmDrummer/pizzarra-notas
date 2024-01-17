@@ -16,6 +16,12 @@ function App() {
     setNotes([...notes, nota]);
   }
 
+  function eliminarNota(index) {
+    const notes = [...notes];
+    notes.splice(index, 1);
+    setNotes(notes);
+  }
+
   return (
     <div className="App">
       <h1 className="text-white">Pizzarra Notas</h1>
@@ -110,8 +116,12 @@ function App() {
         {notes.map((nota, index) => (
           <Note
             key={index}
+            index={index}
             titulo={nota.titulo}
             contenido={nota.contenido}
+            eliminarNota={index => {
+              eliminarNota(index);
+            }}
           ></Note>
         ))}
       </div>
