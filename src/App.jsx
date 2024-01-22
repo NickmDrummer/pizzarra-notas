@@ -4,95 +4,98 @@ import Note from './components/Note/Note';
 
 function App() {
   const [notes, setNotes] = useState([]);
-
+  console.log('notas', notes);
   function agregarNota() {
     const titulo = document.getElementById('recipient-name').value;
     const contenido = document.getElementById('message-text').value;
 
     const nota = {
+      id: Date.now(),
       titulo: titulo,
       contenido: contenido,
     };
     setNotes([...notes, nota]);
   }
 
-  function eliminarNota(index) {
-    const notes = [...notes];
-    notes.splice(index, 1);
-    setNotes(notes);
+  function eliminarNota(id) {
+    const notasActualizadas = notes.filter(nota => nota.id !== id);
+    setNotes(notasActualizadas);
   }
 
   return (
-    <div className="App">
-      <h1 className="text-white">Pizzarra Notas</h1>
-      <div className="nuevaNotaContainer">
+    <div className='App'>
+      <h1 className='text-white'>Pizzarra Notas</h1>
+      <div className='nuevaNotaContainer'>
         <button
-          type="button"
-          className="btn btn-outline-light"
-          data-bs-toggle="modal"
-          data-bs-target="#nuevaNota"
+          type='button'
+          className='btn btn-outline-light'
+          data-bs-toggle='modal'
+          data-bs-target='#nuevaNota'
         >
           Nueva Nota
         </button>
 
         <div
-          className="modal fade"
-          id="nuevaNota"
-          tabIndex="-1"
-          aria-labelledby="nuevanotaLabel"
-          aria-hidden="true"
+          className='modal fade'
+          id='nuevaNota'
+          tabIndex='-1'
+          aria-labelledby='nuevanotaLabel'
+          aria-hidden='true'
         >
-          <form id="Formulario">
-            <div className="modal-dialog">
-              <div className="modal-content modalNota">
-                <div className="modal-header border-bottom-0 ">
-                  <h1 className="modal-title fs-5" id="nuevanotaLabel">
+          <form id='Formulario'>
+            <div className='modal-dialog'>
+              <div className='modal-content modalNota'>
+                <div className='modal-header border-bottom-0 '>
+                  <h1
+                    className='modal-title fs-5'
+                    id='nuevanotaLabel'
+                  >
                     Nueva Nota
                   </h1>
                   <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
+                    type='button'
+                    className='btn-close'
+                    data-bs-dismiss='modal'
+                    aria-label='Close'
                   ></button>
                 </div>
-                <div className="modal-body">
-                  <div className="mb-3">
+                <div className='modal-body'>
+                  <div className='mb-3'>
                     <label
-                      htmlFor="recipient-name"
-                      className="col-form-label fs-3 fw-bold"
+                      htmlFor='recipient-name'
+                      className='col-form-label fs-3 fw-bold'
                     >
                       Titulo:
                     </label>
                     <input
-                      type="text"
-                      className="form-control fs-3 fw-bold"
-                      id="recipient-name"
+                      type='text'
+                      className='form-control fs-3 fw-bold'
+                      id='recipient-name'
                     ></input>
                   </div>
-                  <div className="mb-3">
+                  <div className='mb-3'>
                     <label
-                      htmlFor="message-text"
-                      className="col-form-label fs-3 fw-bold"
+                      htmlFor='message-text'
+                      className='col-form-label fs-3 fw-bold'
                     >
                       Mensaje:
                     </label>
                     <textarea
-                      className="form-control fs-3 fw-bold"
-                      id="message-text"
+                      className='form-control fs-3 fw-bold'
+                      id='message-text'
                     ></textarea>
                   </div>
                 </div>
-                <div className="modal-footer border-top-0 ">
+                <div className='modal-footer border-top-0 '>
                   <button
-                    type="button"
-                    className="btn btn-danger fs-5 "
-                    data-bs-dismiss="modal"
+                    type='button'
+                    className='btn btn-danger fs-5 '
+                    data-bs-dismiss='modal'
                   >
                     Cerrar
                   </button>
                   <button
-                    type="submit"
+                    type='submit'
                     onClick={e => {
                       e.preventDefault();
                       if (validarFormulario()) {
@@ -101,8 +104,8 @@ function App() {
 
                       document.getElementById('Formulario').reset();
                     }}
-                    className="btn btn-dark fs-5"
-                    data-bs-dismiss="modal"
+                    className='btn btn-dark fs-5'
+                    data-bs-dismiss='modal'
                   >
                     Guardar Nota
                   </button>
@@ -112,17 +115,15 @@ function App() {
           </form>
         </div>
       </div>
-      <div className="notasContainer">
-        {notes.map((nota, index) => (
+      <div className='notasContainer'>
+        {notes.map(nota => (
           <Note
-            key={index}
-            index={index}
+            key={nota.id}
+            index={nota.id}
             titulo={nota.titulo}
             contenido={nota.contenido}
-            eliminarNota={index => {
-              eliminarNota(index);
-            }}
-          ></Note>
+            eliminarNota={() => eliminarNota(nota.id)}
+          />
         ))}
       </div>
     </div>
