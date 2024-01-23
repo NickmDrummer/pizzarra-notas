@@ -1,75 +1,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
 
-
 html,
 body {
-    margin: 0;
-    padding: 0;
-    background-image: url('./img/pizzarra/pizzarra.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  background-image: url('./img/pizzarra/pizzarra.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .App {
-    background-size: cover;
-    width: 100vw;
-    text-align: center;
-    margin-top: 30px;
-
-
-
+  background-size: cover;
+  width: 100vw;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .nuevaNotaContainer {
-    margin: 50px;
-    display: flex;
-    justify-content: center;
+  margin: 50px;
+  display: flex;
+  justify-content: center;
 }
 
 .modalNota {
-    background-repeat: no-repeat;
-    background-size: contain;
-    background: rgb(131, 100, 36);
-    background: linear-gradient(180deg, rgb(201, 149, 45) 0%, rgba(247, 199, 99, 1) 48%, rgba(251, 222, 142, 1) 100%);
-    font-family: 'Annie Use Your Telescope', cursive;
-    font-size: 1.4rem;
-    font-weight: 600;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background: rgb(131, 100, 36);
+  background: linear-gradient(
+    180deg,
+    rgb(201, 149, 45) 0%,
+    rgba(247, 199, 99, 1) 48%,
+    rgba(251, 222, 142, 1) 100%
+  );
+  font-family: 'Annie Use Your Telescope', cursive;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
-
 #nuevanotaLabel {
-    font-size: 1.5rem !important;
-    font-weight: 600;
+  font-size: 1.5rem !important;
+  font-weight: 600;
 }
 
 .form-control {
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid black;
-    border-radius: 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 0;
 }
 
 .form-control:focus {
-    background-color: transparent;
-    border-bottom: none;
-    box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.575);
+  background-color: transparent;
+  border-bottom: none;
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.575);
 }
 
-
-
 .notasContainer {
-    width: 100vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 @media only screen and (max-width: 600px) {
-    .notasContainer {
-        margin-bottom: 50px;
-    }
+  .notasContainer {
+    margin-bottom: 50px;
+  }
 }
 
-@media only screen and (max-width: 1200px) {}
+@media only screen and (max-width: 1200px) {
+}
+

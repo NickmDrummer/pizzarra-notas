@@ -4,7 +4,15 @@ import Note from './components/Note/Note';
 
 function App() {
   const [notes, setNotes] = useState([]);
-  console.log('notas', notes);
+  const [editando, setEditando] = useState(false);
+  const [notaEditando, setNotaEditando] = useState({});
+  //TODO: Crear funcion para manejar el evento
+
+  function manejarForm() {
+    if (editando === false) {
+      agregarNota();
+    }
+  }
   function agregarNota() {
     const titulo = document.getElementById('recipient-name').value;
     const contenido = document.getElementById('message-text').value;
@@ -22,15 +30,34 @@ function App() {
     setNotes(notasActualizadas);
   }
 
+  function editarNota(id) {
+    setEditando(true);
+    const nota = notes.find(nota => nota.id === id);
+
+    notaEditando.id = id;
+    const { titulo, contenido } = nota;
+    // Obtenemos los datos y los ponemos en el modal
+    const nameNotaInput = document.getElementById('recipient-name');
+    const messageInput = document.getElementById('message-text');
+    nameNotaInput.value = titulo;
+    messageInput.value = contenido;
+
+    // leemos los cambios en el input y los actualizamos
+    const notasMenosNota = notes.filter(nota => nota.id !== id);
+    setNotes([...notasMenosNota, notaEditando]);
+  }
+
   return (
     <div className='App'>
       <h1 className='text-white'>Pizzarra Notas</h1>
       <div className='nuevaNotaContainer'>
         <button
+          id='btnNuevaNota'
           type='button'
           className='btn btn-outline-light'
           data-bs-toggle='modal'
           data-bs-target='#nuevaNota'
+          onClick={() => setEditando(false)}
         >
           Nueva Nota
         </button>
@@ -57,6 +84,9 @@ function App() {
                     className='btn-close'
                     data-bs-dismiss='modal'
                     aria-label='Close'
+                    onClick={() =>
+                      document.getElementById('Formulario').reset()
+                    }
                   ></button>
                 </div>
                 <div className='modal-body'>
@@ -68,6 +98,12 @@ function App() {
                       Titulo:
                     </label>
                     <input
+                      onChange={e => {
+                        setNotaEditando({
+                          ...notaEditando,
+                          titulo: e.target.value,
+                        });
+                      }}
                       type='text'
                       className='form-control fs-3 fw-bold'
                       id='recipient-name'
@@ -81,6 +117,12 @@ function App() {
                       Mensaje:
                     </label>
                     <textarea
+                      onChange={e => {
+                        setNotaEditando({
+                          ...notaEditando,
+                          contenido: e.target.value,
+                        });
+                      }}
                       className='form-control fs-3 fw-bold'
                       id='message-text'
                     ></textarea>
@@ -91,6 +133,9 @@ function App() {
                     type='button'
                     className='btn btn-danger fs-5 '
                     data-bs-dismiss='modal'
+                    onClick={() =>
+                      document.getElementById('Formulario').reset()
+                    }
                   >
                     Cerrar
                   </button>
@@ -99,7 +144,7 @@ function App() {
                     onClick={e => {
                       e.preventDefault();
                       if (validarFormulario()) {
-                        agregarNota();
+                        manejarForm();
                       }
 
                       document.getElementById('Formulario').reset();
@@ -123,6 +168,7 @@ function App() {
             titulo={nota.titulo}
             contenido={nota.contenido}
             eliminarNota={() => eliminarNota(nota.id)}
+            editarNota={e => editarNota(e, nota.id)}
           />
         ))}
       </div>

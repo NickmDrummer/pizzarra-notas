@@ -3,7 +3,7 @@ import close from './../../img/close-circle-sharp.svg';
 import pen from './../../img/pencil-sharp.svg';
 
 import './Note.css';
-function Note({ index, titulo, contenido, eliminarNota }) {
+function Note({ index, titulo, contenido, eliminarNota, editarNota }) {
   return (
     <div
       id={index}
@@ -18,7 +18,12 @@ function Note({ index, titulo, contenido, eliminarNota }) {
         id='pen'
         src={pen}
         className='notaIconos'
+        data-bs-toggle='modal'
+        data-bs-target='#nuevaNota'
         alt='Editar'
+        onClick={index => {
+          editarNota(index);
+        }}
       />
       <img
         id='close'
