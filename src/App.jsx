@@ -4,7 +4,7 @@ import Note from './components/Note/Note';
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [butonEditSave, setButonEditSave] = useState(false);
+  const [idNota, setIdNota] = useState(null);
 
   function agregarNota() {
     const titulo = document.getElementById('titulo').value;
@@ -32,47 +32,39 @@ function App() {
   }
 
   function editarNota(e, id) {
-    const targetId = Number(
-      e.target.parentElement.parentElement.parentElement.parentElement.id,
-    );
-    const nota = notes.find(nota => nota.id === id);
-    if (targetId === id) {
-      nota.editando = true;
-      setButonEditSave(true);
-      const tituloEditable =
-        e.target.parentElement.parentElement.firstChild.childNodes[0];
-      const contenidoEditable =
-        e.target.parentElement.parentElement.firstChild.childNodes[1];
+    setIdNota(id);
 
-      tituloEditable.setAttribute('contenteditable', 'true');
-      contenidoEditable.setAttribute('contenteditable', 'true');
-    }
+    const nota = notes.find(nota => nota.id === id);
+    // Seleccionamos el modal
+    const exampleModal = document.getElementById('exampleModal');
+
+    // Selecionamos los inputs del modal
+    const modalTitle = exampleModal.querySelector('#recipient-name');
+    const modalBody = exampleModal.querySelector('#message-text');
+
+    modalTitle.value = nota.titulo;
+    modalBody.value = nota.contenido;
   }
 
-  function guardarNotaEditada(e, id) {
-    const targetId = Number(
-      e.target.parentElement.parentElement.parentElement.parentElement.id,
-    );
+  function guardarNotaEditada() {
+    if (validarModal()) {
+      // Seleccionamos el modal
+      const exampleModal = document.getElementById('exampleModal');
 
-    const nota = notes.find(nota => nota.id === id);
-    if (targetId === id) {
-      setButonEditSave(false);
-      nota.editando = false;
+      // Selecionamos los inputs del modal
+      const modalTitle = exampleModal.querySelector('#recipient-name');
+      const modalBody = exampleModal.querySelector('#message-text');
 
-      const tituloEditable =
-        e.target.parentElement.parentElement.firstChild.childNodes[0].firstChild
-          .data;
-      const contenidoEditable =
-        e.target.parentElement.parentElement.firstChild.childNodes[1].firstChild
-          .data;
+      const nota = notes.find(nota => nota.id === idNota);
+
       const notaActualizada = {
-        id: nota.id,
-        titulo: tituloEditable,
-        contenido: contenidoEditable,
-        color: nota.color,
-        editando: false,
+        ...nota,
+        titulo: modalTitle.value,
+        contenido: modalBody.value,
       };
-      setNotes(notes.map(nota => (nota.id === id ? notaActualizada : nota)));
+      setNotes(
+        notes.map(nota => (nota.id === idNota ? notaActualizada : nota)),
+      );
     }
   }
 
@@ -142,6 +134,83 @@ function App() {
           </div>
         </form>
       </div>
+
+      {/* TODO: modal inicio */}
+      <div
+        className='modal fade'
+        id='exampleModal'
+        tabIndex='-1'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'
+      >
+        <div className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h1
+                className='modal-title fs-5'
+                id='exampleModalLabel'
+              >
+                Editar Nota
+              </h1>
+              <button
+                type='button'
+                className='btn-close'
+                data-bs-dismiss='modal'
+                aria-label='Close'
+              ></button>
+            </div>
+            <div className='modal-body'>
+              <form>
+                <div className='mb-3'>
+                  <label
+                    htmlFor='recipient-name'
+                    className='col-form-label'
+                  >
+                    Titulo:
+                  </label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='recipient-name'
+                  ></input>
+                </div>
+                <div className='mb-3'>
+                  <label
+                    htmlFor='message-text'
+                    className='col-form-label'
+                  >
+                    Nota:
+                  </label>
+                  <textarea
+                    className='form-control'
+                    id='message-text'
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            <div className='modal-footer'>
+              <button
+                type='button'
+                className='btn btn-secondary'
+                data-bs-dismiss='modal'
+              >
+                Cerrar
+              </button>
+              <button
+                type='button'
+                className='btn btn-primary'
+                onClick={guardarNotaEditada}
+                data-bs-dismiss='modal'
+              >
+                Guardar Cambios
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* TODO: modal fin */}
+
       <div className='d-flex flex-wrap justify-content-center mb-5'>
         {notes.map(nota => (
           <Note
@@ -152,9 +221,6 @@ function App() {
             color={nota.color}
             eliminarNota={() => eliminarNota(nota.id)}
             editarNota={e => editarNota(e, nota.id)}
-            guardarNotaEditada={e => guardarNotaEditada(e, nota.id)}
-            estadoBoton={butonEditSave}
-            notaEditando={nota.editando}
           />
         ))}
       </div>
@@ -172,5 +238,21 @@ function validarFormulario() {
 
     return false;
   }
+  return true;
+}
+
+function validarModal() {
+  // Seleccionamos el modal
+  const exampleModal = document.getElementById('exampleModal');
+
+  // Selecionamos los inputs del modal
+  const modalTitle = exampleModal.querySelector('#recipient-name').value;
+  const modalBody = exampleModal.querySelector('#message-text').value;
+
+  if (modalTitle === '' || modalBody === '') {
+    alert('Por favor, rellene todos los campos');
+    return false;
+  }
+
   return true;
 }
