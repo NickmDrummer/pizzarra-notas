@@ -4,16 +4,8 @@ import Note from './components/Note/Note';
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [editando, setEditando] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [notaEditando, setNotaEditando] = useState({});
+  const [butonEditSave, setButonEditSave] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  function manejarForm() {
-    if (editando === false) {
-      agregarNota();
-    }
-  }
   function agregarNota() {
     const titulo = document.getElementById('titulo').value;
     const contenido = document.getElementById('contenido').value;
@@ -24,6 +16,7 @@ function App() {
       titulo: titulo,
       contenido: contenido,
       color: color,
+      editando: false,
     };
     setNotes([...notes, nota]);
   }
@@ -39,7 +32,48 @@ function App() {
   }
 
   function editarNota(e, id) {
-    console.log(e.target, id);
+    const targetId = Number(
+      e.target.parentElement.parentElement.parentElement.parentElement.id,
+    );
+    const nota = notes.find(nota => nota.id === id);
+    if (targetId === id) {
+      nota.editando = true;
+      setButonEditSave(true);
+      const tituloEditable =
+        e.target.parentElement.parentElement.firstChild.childNodes[0];
+      const contenidoEditable =
+        e.target.parentElement.parentElement.firstChild.childNodes[1];
+
+      tituloEditable.setAttribute('contenteditable', 'true');
+      contenidoEditable.setAttribute('contenteditable', 'true');
+    }
+  }
+
+  function guardarNotaEditada(e, id) {
+    const targetId = Number(
+      e.target.parentElement.parentElement.parentElement.parentElement.id,
+    );
+
+    const nota = notes.find(nota => nota.id === id);
+    if (targetId === id) {
+      setButonEditSave(false);
+      nota.editando = false;
+
+      const tituloEditable =
+        e.target.parentElement.parentElement.firstChild.childNodes[0].firstChild
+          .data;
+      const contenidoEditable =
+        e.target.parentElement.parentElement.firstChild.childNodes[1].firstChild
+          .data;
+      const notaActualizada = {
+        id: nota.id,
+        titulo: tituloEditable,
+        contenido: contenidoEditable,
+        color: nota.color,
+        editando: false,
+      };
+      setNotes(notes.map(nota => (nota.id === id ? notaActualizada : nota)));
+    }
   }
 
   return (
@@ -118,6 +152,9 @@ function App() {
             color={nota.color}
             eliminarNota={() => eliminarNota(nota.id)}
             editarNota={e => editarNota(e, nota.id)}
+            guardarNotaEditada={e => guardarNotaEditada(e, nota.id)}
+            estadoBoton={butonEditSave}
+            notaEditando={nota.editando}
           />
         ))}
       </div>

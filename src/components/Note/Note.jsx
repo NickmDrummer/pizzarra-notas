@@ -1,5 +1,16 @@
+/* eslint-disable react/prop-types */
 import './Note.css';
-function Note({ index, titulo, contenido, color, eliminarNota, editarNota }) {
+function Note({
+  index,
+  titulo,
+  contenido,
+  color,
+  eliminarNota,
+  editarNota,
+  guardarNotaEditada,
+  estadoBoton,
+  notaEditando,
+}) {
   const texturaHoja =
     'https://img.freepik.com/foto-gratis/lisa-pared-estuco-blanco_1194-6786.jpg?w=1380&t=st=1706037412~exp=1706038012~hmac=01ee711d1cdd839ac52f5ac8013d1a4f2d851bf34873b3f7cfa2fd9a42e1d574';
   const styles = {
@@ -27,20 +38,29 @@ function Note({ index, titulo, contenido, color, eliminarNota, editarNota }) {
       >
         <div className='h-100 d-flex flex-column row-gap-3 justify-content-between text-center'>
           <div className='note-content'>
-            <h5 className='card-title cursiveFont'>{titulo}</h5>
+            <h5
+              id='tituloEditable'
+              className='card-title cursiveFont'
+            >
+              {titulo}
+            </h5>
             <div
               id='fake_textarea_content'
               className='card-text cursiveFont'
-              contentEditable
             >
               {contenido}
             </div>
           </div>
+          <input
+            type='hidden'
+            id='tituloEditable'
+            name='titulo_editable'
+          />
 
           <input
             type='hidden'
             id='fake_textarea_content'
-            name='foobar'
+            name='textarea_content'
           />
           <div className='d-flex justify-content-around'>
             <button
@@ -50,10 +70,10 @@ function Note({ index, titulo, contenido, color, eliminarNota, editarNota }) {
               Borrar
             </button>
             <button
-              onClick={editarNota}
+              onClick={estadoBoton === false ? editarNota : guardarNotaEditada}
               className='btn btn-info btn-sm cursor-pointer'
             >
-              Editar
+              {notaEditando === false ? 'Editar' : 'Guardar'}
             </button>
           </div>
         </div>
