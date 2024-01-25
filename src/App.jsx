@@ -5,168 +5,117 @@ import Note from './components/Note/Note';
 function App() {
   const [notes, setNotes] = useState([]);
   const [editando, setEditando] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [notaEditando, setNotaEditando] = useState({});
-  //TODO: Crear funcion para manejar el evento
 
+  // eslint-disable-next-line no-unused-vars
   function manejarForm() {
     if (editando === false) {
       agregarNota();
     }
   }
   function agregarNota() {
-    const titulo = document.getElementById('recipient-name').value;
-    const contenido = document.getElementById('message-text').value;
+    const titulo = document.getElementById('titulo').value;
+    const contenido = document.getElementById('contenido').value;
+    const color = document.getElementById('colorInput').value;
 
     const nota = {
       id: Date.now(),
       titulo: titulo,
       contenido: contenido,
+      color: color,
     };
     setNotes([...notes, nota]);
   }
 
   function eliminarNota(id) {
-    const notasActualizadas = notes.filter(nota => nota.id !== id);
-    setNotes(notasActualizadas);
+    const respuesta = prompt('Escriba ok para eliminar');
+    if (respuesta === 'ok') {
+      const notasActualizadas = notes.filter(nota => nota.id !== id);
+      setNotes(notasActualizadas);
+    } else {
+      alert('Eliminacion cancelada');
+    }
   }
 
-  function editarNota(id) {
-    setEditando(true);
-    const nota = notes.find(nota => nota.id === id);
-
-    notaEditando.id = id;
-    const { titulo, contenido } = nota;
-    // Obtenemos los datos y los ponemos en el modal
-    const nameNotaInput = document.getElementById('recipient-name');
-    const messageInput = document.getElementById('message-text');
-    nameNotaInput.value = titulo;
-    messageInput.value = contenido;
-
-    // leemos los cambios en el input y los actualizamos
-    const notasMenosNota = notes.filter(nota => nota.id !== id);
-    setNotes([...notasMenosNota, notaEditando]);
+  function editarNota(e, id) {
+    console.log(e.target, id);
   }
 
   return (
     <div className='App'>
-      <h1 className='text-white'>Pizzarra Notas</h1>
-      <div className='nuevaNotaContainer'>
-        <button
-          id='btnNuevaNota'
-          type='button'
-          className='btn btn-outline-light'
-          data-bs-toggle='modal'
-          data-bs-target='#nuevaNota'
-          onClick={() => setEditando(false)}
-        >
-          Nueva Nota
-        </button>
-
-        <div
-          className='modal fade'
-          id='nuevaNota'
-          tabIndex='-1'
-          aria-labelledby='nuevanotaLabel'
-          aria-hidden='true'
-        >
-          <form id='Formulario'>
-            <div className='modal-dialog'>
-              <div className='modal-content modalNota'>
-                <div className='modal-header border-bottom-0 '>
-                  <h1
-                    className='modal-title fs-5'
-                    id='nuevanotaLabel'
-                  >
-                    Nueva Nota
-                  </h1>
-                  <button
-                    type='button'
-                    className='btn-close'
-                    data-bs-dismiss='modal'
-                    aria-label='Close'
-                    onClick={() =>
-                      document.getElementById('Formulario').reset()
-                    }
-                  ></button>
-                </div>
-                <div className='modal-body'>
-                  <div className='mb-3'>
-                    <label
-                      htmlFor='recipient-name'
-                      className='col-form-label fs-3 fw-bold'
-                    >
-                      Titulo:
-                    </label>
-                    <input
-                      onChange={e => {
-                        setNotaEditando({
-                          ...notaEditando,
-                          titulo: e.target.value,
-                        });
-                      }}
-                      type='text'
-                      className='form-control fs-3 fw-bold'
-                      id='recipient-name'
-                    ></input>
-                  </div>
-                  <div className='mb-3'>
-                    <label
-                      htmlFor='message-text'
-                      className='col-form-label fs-3 fw-bold'
-                    >
-                      Mensaje:
-                    </label>
-                    <textarea
-                      onChange={e => {
-                        setNotaEditando({
-                          ...notaEditando,
-                          contenido: e.target.value,
-                        });
-                      }}
-                      className='form-control fs-3 fw-bold'
-                      id='message-text'
-                    ></textarea>
-                  </div>
-                </div>
-                <div className='modal-footer border-top-0 '>
-                  <button
-                    type='button'
-                    className='btn btn-danger fs-5 '
-                    data-bs-dismiss='modal'
-                    onClick={() =>
-                      document.getElementById('Formulario').reset()
-                    }
-                  >
-                    Cerrar
-                  </button>
-                  <button
-                    type='submit'
-                    onClick={e => {
-                      e.preventDefault();
-                      if (validarFormulario()) {
-                        manejarForm();
-                      }
-
-                      document.getElementById('Formulario').reset();
-                    }}
-                    className='btn btn-dark fs-5'
-                    data-bs-dismiss='modal'
-                  >
-                    Guardar Nota
-                  </button>
-                </div>
-              </div>
+      <h1 className='text-white cursiveFont'>Pizzarra Notas</h1>
+      <div className='container mt-5'>
+        <form id='formulario'>
+          <div className='m-auto col-lg-3 col-md-6 col-10'>
+            <div className='mb-3 text-white'>
+              <h2 className='text-white mb-4 cursiveFont'>Nueva Nota</h2>
+              <label
+                htmlFor='titulo'
+                className='form-label'
+              >
+                Titulo
+              </label>
+              <input
+                type='text'
+                className='form-control'
+                id='titulo'
+                placeholder='Escriba el titulo'
+              />
             </div>
-          </form>
-        </div>
+            <div className='mb-3'>
+              <label
+                htmlFor='contenido'
+                className='form-label text-white'
+              >
+                Nota
+              </label>
+              <textarea
+                className='form-control'
+                id='contenido'
+                rows='3'
+                placeholder='Escriba su nota'
+              ></textarea>
+            </div>
+            <div className='mb-3'>
+              <label
+                htmlFor='colorInput'
+                className='form-label text-white mb-3'
+              >
+                Elige un color
+              </label>
+              <input
+                type='color'
+                className='form-control form-control-color mx-auto mb-3'
+                id='colorInput'
+                title='Elige el color de la nota'
+              />
+              <button
+                type='submit'
+                className='btn btn-outline-light mt-4'
+                onClick={e => {
+                  e.preventDefault();
+                  if (validarFormulario()) {
+                    agregarNota();
+                  }
+                  const formulario = document.querySelector('#formulario');
+                  formulario.reset();
+                }}
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div className='notasContainer'>
+      <div className='d-flex flex-wrap justify-content-center mb-5'>
         {notes.map(nota => (
           <Note
             key={nota.id}
             index={nota.id}
             titulo={nota.titulo}
             contenido={nota.contenido}
+            color={nota.color}
             eliminarNota={() => eliminarNota(nota.id)}
             editarNota={e => editarNota(e, nota.id)}
           />
@@ -179,8 +128,8 @@ function App() {
 export default App;
 
 function validarFormulario() {
-  const titulo = document.getElementById('recipient-name').value;
-  const contenido = document.getElementById('message-text').value;
+  const titulo = document.getElementById('titulo').value;
+  const contenido = document.getElementById('contenido').value;
   if (titulo === '' || contenido === '') {
     alert('Por favor, rellene todos los campos');
 

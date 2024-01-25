@@ -1,99 +1,36 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .note {
-    text-align: center;
-    position: relative;
-    margin-bottom: 20px;
-    flex: none;
-    width: calc((100% - 50px) / 6);
-
-}
-
-.notaIconos {
-    position: absolute;
-    cursor: pointer;
-}
-
-#pen {
-    top: 60px;
-    right: 20px;
-    max-height: 25px;
-}
-
-#close {
-    top: 20px;
-    right: 20px;
-    max-height: 25px;
-}
-
-.note img {
-    max-width: 100%;
-    height: auto;
+  width: calc((100%) / 5);
 }
 
 .note-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Annie Use Your Telescope', cursive;
-    font-weight: 600;
-    margin: auto;
-    width: 75%;
-    height: 90%;
-    overflow: auto;
-    scrollbar-width: none;
-
+  margin: auto;
+  width: 100%;
+  overflow: auto;
+  scrollbar-width: none;
 }
 
 .note-content::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 @media screen and (max-width: 600px) {
-    .note {
-        width: calc((100% - 10px) / 1);
-
-    }
-
-    #pen {
-        top: 50px;
-        right: 30px;
-        max-height: 30px;
-    }
-
-    #close {
-        top: 15px;
-        right: 30px;
-        max-height: 30px;
-    }
-
-    .note img {
-        max-width: 90%;
-    }
-
-    .note-content {
-        width: 70%;
-        font-size: 18px;
-    }
+  .note {
+    width: calc((100%) / 1);
+  }
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
-    .note {
-        width: calc((100% - 40px) / 3);
-    }
-
-    .note-content {
-        width: 70%;
-    }
-
-
+  .note {
+    width: calc((100%) / 3);
+  }
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
-    .note {
-        width: calc((100% - 50px) / 4);
-    }
-
-    .note-content {
-        width: 70%;
-    }
+  .note {
+    width: calc((100%) / 4);
+  }
 }
