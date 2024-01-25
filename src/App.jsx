@@ -16,7 +16,6 @@ function App() {
       titulo: titulo,
       contenido: contenido,
       color: color,
-      editando: false,
     };
     setNotes([...notes, nota]);
   }
