@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Note from './components/Note/Note';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const notasLocalStorage = JSON.parse(localStorage.getItem('notas')) || [];
+
+  const [notas, setNotas] = useState(notasLocalStorage);
   const [idNota, setIdNota] = useState(null);
+  const [backgroundModal, setBackgroundModal] = useState('#fff');
+
+  useEffect(() => {
+    localStorage.setItem('notas', JSON.stringify(notas));
+  }, [notas]);
 
   function agregarNota() {
     const titulo = document.getElementById('titulo').value;
@@ -12,28 +20,30 @@ function App() {
     const color = document.getElementById('colorInput').value;
 
     const nota = {
-      id: Date.now(),
+      id: uuidv4(),
       titulo: titulo,
       contenido: contenido,
       color: color,
     };
-    setNotes([...notes, nota]);
+
+    setNotas([...notas, nota]);
   }
 
-  function eliminarNota(id) {
-    const respuesta = prompt('Escriba ok para eliminar');
-    if (respuesta === 'ok') {
-      const notasActualizadas = notes.filter(nota => nota.id !== id);
-      setNotes(notasActualizadas);
-    } else {
-      alert('Eliminacion cancelada');
+  const manejarEnvio = e => {
+    e.preventDefault();
+    if (validarFormulario()) {
+      agregarNota();
     }
-  }
+  };
 
-  function editarNota(e, id) {
+  function editarNota(id) {
     setIdNota(id);
+    const color = notas.find(nota => nota.id === id).color;
 
-    const nota = notes.find(nota => nota.id === id);
+    const bgModal = `${color}`;
+
+    setBackgroundModal(bgModal);
+
     // Seleccionamos el modal
     const exampleModal = document.getElementById('exampleModal');
 
@@ -41,8 +51,10 @@ function App() {
     const modalTitle = exampleModal.querySelector('#recipient-name');
     const modalBody = exampleModal.querySelector('#message-text');
 
-    modalTitle.value = nota.titulo;
-    modalBody.value = nota.contenido;
+    const notaEncontrada = notas.find(nota => nota.id === id);
+
+    modalTitle.value = notaEncontrada.titulo;
+    modalBody.value = notaEncontrada.contenido;
   }
 
   function guardarNotaEditada() {
@@ -54,15 +66,16 @@ function App() {
       const modalTitle = exampleModal.querySelector('#recipient-name');
       const modalBody = exampleModal.querySelector('#message-text');
 
-      const nota = notes.find(nota => nota.id === idNota);
+      const notaEncontrada = notas.find(nota => nota.id === idNota);
 
       const notaActualizada = {
-        ...nota,
+        ...notaEncontrada,
         titulo: modalTitle.value,
         contenido: modalBody.value,
       };
-      setNotes(
-        notes.map(nota => (nota.id === idNota ? notaActualizada : nota)),
+
+      setNotas(
+        notas.map(nota => (nota.id === idNota ? notaActualizada : nota)),
       );
     }
   }
@@ -115,20 +128,31 @@ function App() {
                 id='colorInput'
                 title='Elige el color de la nota'
               />
-              <button
-                type='submit'
-                className='btn btn-outline-light mt-4'
-                onClick={e => {
-                  e.preventDefault();
-                  if (validarFormulario()) {
-                    agregarNota();
-                  }
-                  const formulario = document.querySelector('#formulario');
-                  formulario.reset();
-                }}
-              >
-                Guardar
-              </button>
+
+              <div className='d-flex justify-content-around'>
+                <button
+                  className='btn btn-outline-danger mt-4 btn-sm'
+                  onClick={() => {
+                    setNotas([]);
+                  }}
+                >
+                  Borrar Notas
+                </button>
+
+                <button
+                  type='submit'
+                  className='btn btn-info mt-4 btn-sm'
+                  onClick={e => {
+                    {
+                      manejarEnvio(e);
+                    }
+                    const formulario = document.querySelector('#formulario');
+                    formulario.reset();
+                  }}
+                >
+                  Guardar
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -143,14 +167,15 @@ function App() {
         aria-hidden='true'
       >
         <div className='modal-dialog'>
-          <div className='modal-content'>
+          <div
+            className='modal-content'
+            style={{ backgroundColor: `${backgroundModal}` }}
+          >
             <div className='modal-header'>
               <h1
                 className='modal-title fs-5'
                 id='exampleModalLabel'
-              >
-                Editar Nota
-              </h1>
+              ></h1>
               <button
                 type='button'
                 className='btn-close'
@@ -164,9 +189,7 @@ function App() {
                   <label
                     htmlFor='recipient-name'
                     className='col-form-label'
-                  >
-                    Titulo:
-                  </label>
+                  ></label>
                   <input
                     type='text'
                     className='form-control'
@@ -177,12 +200,11 @@ function App() {
                   <label
                     htmlFor='message-text'
                     className='col-form-label'
-                  >
-                    Nota:
-                  </label>
+                  ></label>
                   <textarea
                     className='form-control'
                     id='message-text'
+                    rows='5'
                   ></textarea>
                 </div>
               </form>
@@ -190,16 +212,16 @@ function App() {
             <div className='modal-footer'>
               <button
                 type='button'
-                className='btn btn-secondary'
+                className='btn btn-light'
                 data-bs-dismiss='modal'
               >
                 Cerrar
               </button>
               <button
                 type='button'
-                className='btn btn-primary'
-                onClick={guardarNotaEditada}
+                className='btn btn-info'
                 data-bs-dismiss='modal'
+                onClick={() => guardarNotaEditada()}
               >
                 Guardar Cambios
               </button>
@@ -211,17 +233,19 @@ function App() {
       {/* TODO: modal fin */}
 
       <div className='d-flex flex-wrap justify-content-center mb-5'>
-        {notes.map(nota => (
-          <Note
-            key={nota.id}
-            index={nota.id}
-            titulo={nota.titulo}
-            contenido={nota.contenido}
-            color={nota.color}
-            eliminarNota={() => eliminarNota(nota.id)}
-            editarNota={e => editarNota(e, nota.id)}
-          />
-        ))}
+        {notas.length > 0 &&
+          notas.map(nota => (
+            <Note
+              key={nota.id}
+              index={nota.id}
+              titulo={nota.titulo}
+              contenido={nota.contenido}
+              color={nota.color}
+              notas={notas}
+              setNotas={setNotas}
+              editarNota={() => editarNota(nota.id)}
+            />
+          ))}
       </div>
     </div>
   );
@@ -240,6 +264,7 @@ function validarFormulario() {
   return true;
 }
 
+// eslint-disable-next-line no-unused-vars
 function validarModal() {
   // Seleccionamos el modal
   const exampleModal = document.getElementById('exampleModal');
